@@ -39,7 +39,17 @@ public class CustomerService {
            c.setName(newCustomer.getName());
            c.setSurname(newCustomer.getSurname());
            c.setEmail(newCustomer.getEmail());
+
        }
        return customerRepository.save(c);
     }
+
+  public Customer getCustomerById(Long id) throws Exception {
+      Optional<Customer> customer = customerRepository.findById(id);
+      if (customer.isPresent()) {
+          return customer.get();
+      } else {
+          throw new Exception();
+      }
+  }
 }
