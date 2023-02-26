@@ -2,11 +2,15 @@ package com.popov.popov.service;
 
 import com.popov.popov.entity.Customer;
 import com.popov.popov.repository.CustomerRepository;
+import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomerService {
@@ -51,5 +55,11 @@ public class CustomerService {
       } else {
           throw new Exception();
       }
+  }
+
+  public List<Customer> sortedCustomer() {
+      return getAll().stream()
+              .sorted(Comparator.comparing(Customer::getName))
+                      .collect(Collectors.toList());
   }
 }

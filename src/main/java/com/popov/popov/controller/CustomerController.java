@@ -34,6 +34,13 @@ public class CustomerController {
         return "customers";
     }
 
+    /**
+     * Добавление и редактирование customers;
+     * @param model
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @GetMapping(path={"/add", "/edit/{id}"})
     public String addCustomers(Model model, @PathVariable("id") Optional<Long> id) throws Exception {
 //         logger.info("Adding customer");
@@ -45,7 +52,6 @@ public class CustomerController {
         }
         return "add-customers";
     }
-
 
     @PostMapping("/createOrUpdateCustomer")
     public String createOrUpdateCustomer(Customer customer) {
@@ -59,6 +65,13 @@ public class CustomerController {
         logger.info("delete the customer, Id: " + id);
         customerService.delete(id);
         return "redirect:/all";
+    }
+
+    @GetMapping("/sort")
+    public String sortCustomerById(Model model) {
+        List<Customer> customers = customerService.sortedCustomer();
+        model.addAttribute("customer", customers);
+        return "customers";
     }
 
 }
